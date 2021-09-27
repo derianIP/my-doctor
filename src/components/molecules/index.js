@@ -5,7 +5,12 @@ import DoctorCategory from './DoctorCategory';
 import DoctorRating from './DoctorRating';
 import HospitalItem from './HospitalItem';
 import NewsItem from './NewsItem';
-import ListDoctorItem from './ListDoctorItem';
+import List from './List';
+import ItemChat from './ItemChat';
+import InputChat from './InputChat';
+import Profile from './Profile';
+import ProfileItem from './ProfieItem';
+import Loading from './Loading';
 export {
   Header,
   BottomNavigator,
@@ -14,5 +19,10 @@ export {
   DoctorRating,
   HospitalItem,
   NewsItem,
-  ListDoctorItem,
+  List,
+  ItemChat,
+  InputChat,
+  Profile,
+  ProfileItem,
+  Loading,
 };

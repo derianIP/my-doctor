@@ -1,15 +1,18 @@
 import React from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
-import {DummyDoctor1, ICStar} from '../../../assets';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {ICStar} from '../../../assets';
 import {Colors, fonts} from '../../../utils';
 
-const DoctorRating = () => {
+const DoctorRating = ({name, desc, avatar, onPress}) => {
   return (
-    <View style={styles.container}>
-      <Image source={DummyDoctor1} style={styles.avatar} />
+    <TouchableOpacity
+      style={styles.container}
+      activeOpacity={0.7}
+      onPress={onPress}>
+      <Image source={{uri: avatar}} style={styles.avatar} />
       <View style={styles.profile}>
-        <Text style={styles.name}>Alexa Rachel</Text>
-        <Text style={styles.professional}>Pediatrician</Text>
+        <Text style={styles.name}>{name}</Text>
+        <Text style={styles.professional}>{desc}</Text>
       </View>
       <View style={styles.rate}>
         <ICStar />
@@ -18,7 +21,7 @@ const DoctorRating = () => {
         <ICStar />
         <ICStar />
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

@@ -1,10 +1,26 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {ImageBackground, StyleSheet, Text, View} from 'react-native';
 import {ILHospital} from '../../assets';
 import {HospitalItem} from '../../components/molecules';
-import {Colors, fonts} from '../../utils';
+import {Fire} from '../../config';
+import {Colors, fonts, showError} from '../../utils';
 
 const Hospitals = () => {
+  const [hospital, setHospital] = useState([]);
+
+  useEffect(() => {
+    Fire.database()
+      .ref('hospital/')
+      .once('value')
+      .then(res => {
+        if (res.val()) {
+          setHospital(res.val());
+        }
+      })
+      .catch(err => {
+        showError(err.message);
+      });
+  }, []);
   return (
     <View style={styles.container}>
       <ImageBackground source={ILHospital} style={styles.background}>
@@ -12,9 +28,17 @@ const Hospitals = () => {
         <Text style={styles.subTitle}>3 tersedia</Text>
       </ImageBackground>
       <View style={styles.contentWrapper}>
-        <HospitalItem />
-        <HospitalItem />
-        <HospitalItem />
+        {hospital.map(item => {
+          return (
+            <HospitalItem
+              key={item.id}
+              type={item.type}
+              name={item.name}
+              address={item.address}
+              image={item.image}
+            />
+          );
+        })}
       </View>
     </View>
   );

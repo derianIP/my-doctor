@@ -1,15 +1,34 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {ILDoctorUmum} from '../../../assets';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  ILDoctorAnak,
+  ILDoctorObat,
+  ILDoctorPsikeater,
+  ILDoctorUmum,
+} from '../../../assets';
 import {Colors, fonts} from '../../../utils';
 
-const DoctorCategory = () => {
+const DoctorCategory = ({category, onPress}) => {
+  const Icon = () => {
+    switch (category) {
+      case 'Dokter Umum':
+        return <ILDoctorUmum />;
+      case 'Dokter Obat':
+        return <ILDoctorObat />;
+      case 'Psikiater':
+        return <ILDoctorPsikeater />;
+      case 'Dokter Anak':
+        return <ILDoctorAnak />;
+      default:
+        return <ILDoctorUmum />;
+    }
+  };
   return (
-    <View style={styles.container}>
-      <ILDoctorUmum />
+    <TouchableOpacity style={styles.container} onPress={onPress}>
+      <Icon />
       <Text style={styles.label}>Saya butuh</Text>
-      <Text style={styles.professional}>dokter umum</Text>
-    </View>
+      <Text style={styles.professional}>{category}</Text>
+    </TouchableOpacity>
   );
 };
 
@@ -22,7 +41,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     borderRadius: 10,
     marginRight: 10,
-    width: 100,
+    width: 110,
     height: 130,
   },
   label: {

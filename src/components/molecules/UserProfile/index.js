@@ -1,17 +1,34 @@
-import React from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
-import {DummyUser1} from '../../../assets';
-import {Colors, fonts} from '../../../utils';
+import React, {useEffect, useState} from 'react';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {ILPhotoNull} from '../../../assets';
+import {Colors, fonts, getData} from '../../../utils';
 
-const UserProfile = () => {
+const UserProfile = ({onPress}) => {
+  const [profile, setProfile] = useState({
+    fullName: '',
+    profession: '',
+    photo: ILPhotoNull,
+  });
+
+  useEffect(() => {
+    getData('user').then(res => {
+      const data = res;
+      data.photo = {uri: res.photo};
+      setProfile(data);
+    });
+  }, []);
+
   return (
-    <View style={styles.container}>
-      <Image source={DummyUser1} style={styles.avatar} />
+    <TouchableOpacity
+      style={styles.container}
+      activeOpacity={0.7}
+      onPress={onPress}>
+      <Image source={profile.photo} style={styles.avatar} />
       <View style={styles.profile}>
-        <Text style={styles.title}>Shayna Melinda</Text>
-        <Text style={styles.subtitle}>Product Designer</Text>
+        <Text style={styles.title}>{profile.fullName}</Text>
+        <Text style={styles.subtitle}>{profile.profession}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -34,10 +51,12 @@ const styles = StyleSheet.create({
     fontFamily: fonts.primary[600],
     fontSize: 16,
     color: Colors.text.primary,
+    textTransform: 'capitalize',
   },
   subtitle: {
     fontFamily: fonts.primary.normal,
     fontSize: 12,
     color: Colors.text.secondary,
+    textTransform: 'capitalize',
   },
 });
